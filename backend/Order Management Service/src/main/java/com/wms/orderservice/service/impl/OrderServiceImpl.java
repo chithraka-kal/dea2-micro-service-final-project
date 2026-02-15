@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderNumberGenerator orderNumberGenerator;
     private final InventoryClient inventoryClient;
 
-    // ----- Legal transitions map -----
+    // Defines which status transitions are allowed for each order state
     private static final Map<OrderStatus, Set<OrderStatus>> LEGAL_TRANSITIONS = Map.ofEntries(
             Map.entry(OrderStatus.CREATED, Set.of(OrderStatus.VALIDATED, OrderStatus.REJECTED, OrderStatus.CANCELLED)),
             Map.entry(OrderStatus.VALIDATED, Set.of(OrderStatus.APPROVED, OrderStatus.PARTIALLY_APPROVED, OrderStatus.REJECTED, OrderStatus.CANCELLED)),
@@ -50,9 +50,7 @@ public class OrderServiceImpl implements OrderService {
             Map.entry(OrderStatus.DELIVERED, Set.of())
     );
 
-    // ===================================================================
-    // 1) Create Order
-    // ===================================================================
+
     @Override
     public OrderResponse createOrder(CreateOrderRequest request) {
         log.info("Creating order for customer: {}", request.getCustomerId());
@@ -69,9 +67,7 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toResponse(saved);
     }
 
-    // ===================================================================
-    // 2) Get Order by ID
-    // ===================================================================
+
     @Override
     @Transactional(readOnly = true)
     public OrderResponse getOrderById(UUID id) {
@@ -79,9 +75,7 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toResponse(order);
     }
 
-    // ===================================================================
-    // 3) Get All Orders (optional status filter)
-    // ===================================================================
+
     @Override
     @Transactional(readOnly = true)
     public List<OrderResponse> getAllOrders(OrderStatus status) {
@@ -94,9 +88,7 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toResponseList(orders);
     }
 
-    // ===================================================================
-    // 4) Validate Order
-    // ===================================================================
+
     @Override
     public AvailabilityResponse validateOrder(UUID id) {
         Order order = findOrderOrThrow(id);
@@ -107,7 +99,6 @@ public class OrderServiceImpl implements OrderService {
 
         log.info("Validating order: {} ({})", order.getOrderNumber(), id);
 
-        // Call Inventory Service
         AvailabilityResponse availability = inventoryClient.checkAvailability(id);
 
         if (!availability.isCanFulfill() && !order.isPartialAllowed()) {
@@ -123,9 +114,7 @@ public class OrderServiceImpl implements OrderService {
         return availability;
     }
 
-    // ===================================================================
-    // 5) Approve Order
-    // ===================================================================
+
     @Override
     public OrderResponse approveOrder(UUID id, ApproveOrderRequest request) {
         Order order = findOrderOrThrow(id);
@@ -136,7 +125,7 @@ public class OrderServiceImpl implements OrderService {
 
         log.info("Approving order: {} ({}) with type: {}", order.getOrderNumber(), id, request.getApprovalType());
 
-        // Fresh availability check
+        // Re-check inventory before approving to ensure stock is still available
         AvailabilityResponse availability = inventoryClient.checkAvailability(id);
 
         switch (request.getApprovalType()) {
@@ -148,15 +137,12 @@ public class OrderServiceImpl implements OrderService {
         calculateTotalAmount(order);
         Order saved = orderRepository.save(order);
 
-        // Reserve approved quantities in Inventory Service
         reserveApprovedItems(saved);
 
         return orderMapper.toResponse(saved);
     }
 
-    // ===================================================================
-    // 6) Cancel Order
-    // ===================================================================
+
     @Override
     public OrderResponse cancelOrder(UUID id) {
         Order order = findOrderOrThrow(id);
@@ -172,9 +158,7 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toResponse(saved);
     }
 
-    // ===================================================================
-    // 7) Update Order Status (manual)
-    // ===================================================================
+
     @Override
     public OrderResponse updateOrderStatus(UUID id, UpdateOrderStatusRequest request) {
         Order order = findOrderOrThrow(id);
@@ -189,9 +173,7 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toResponse(saved);
     }
 
-    // ===================================================================
-    //  Private helpers
-    // ===================================================================
+    // --- Helper methods ---
 
     private Order findOrderOrThrow(UUID id) {
         return orderRepository.findById(id)
@@ -215,7 +197,7 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalAmount(total);
     }
 
-    // ---------- FULL ----------
+
     private void handleFullApproval(Order order, AvailabilityResponse availability) {
         if (!availability.isCanFulfill()) {
             throw new BusinessException("Cannot fully approve — insufficient stock. Use AUTO or PARTIAL approval.");
@@ -225,15 +207,15 @@ public class OrderServiceImpl implements OrderService {
         log.info("Order {} FULLY APPROVED", order.getOrderNumber());
     }
 
-    // ---------- AUTO ----------
+
     private void handleAutoApproval(Order order, AvailabilityResponse availability) {
         if (availability.isCanFulfill()) {
-            // Enough stock — full approval
+
             order.getItems().forEach(item -> item.setApprovedQty(item.getRequestedQty()));
             order.setStatus(OrderStatus.APPROVED);
             log.info("Order {} AUTO → FULLY APPROVED (sufficient stock)", order.getOrderNumber());
         } else if (order.isPartialAllowed()) {
-            // Use suggested approved quantities
+            // Partial fulfillment — use suggested quantities from the inventory check
             Map<String, Integer> suggestedMap = buildSuggestedMap(availability);
             order.getItems().forEach(item -> {
                 int suggested = suggestedMap.getOrDefault(item.getItemId(), 0);
@@ -246,7 +228,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    // ---------- PARTIAL ----------
+
     private void handlePartialApproval(Order order, ApproveOrderRequest request, AvailabilityResponse availability) {
         if (request.getApprovedItems() == null || request.getApprovedItems().isEmpty()) {
             throw new BusinessException("PARTIAL approval requires a list of approved items.");

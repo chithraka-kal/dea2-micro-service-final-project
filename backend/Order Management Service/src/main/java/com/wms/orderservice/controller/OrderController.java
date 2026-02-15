@@ -33,9 +33,6 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    // ---------------------------------------------------------------
-    // 1) POST /api/v1/orders — Create order
-    // ---------------------------------------------------------------
     @PostMapping
     @Operation(
             summary = "Create a new order",
@@ -62,9 +59,6 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // ---------------------------------------------------------------
-    // 2) GET /api/v1/orders/{id} — Get order by ID
-    // ---------------------------------------------------------------
     @GetMapping("/{id}")
     @Operation(
             summary = "Get order by ID",
@@ -83,9 +77,6 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    // ---------------------------------------------------------------
-    // 3) GET /api/v1/orders?status=APPROVED — List orders
-    // ---------------------------------------------------------------
     @GetMapping
     @Operation(
             summary = "List orders",
@@ -107,9 +98,6 @@ public class OrderController {
         return ResponseEntity.ok(responses);
     }
 
-    // ---------------------------------------------------------------
-    // 4) POST /api/v1/orders/{id}/validate — Validate order
-    // ---------------------------------------------------------------
     @PostMapping("/{id}/validate")
     @Operation(
             summary = "Validate order against inventory",
@@ -143,9 +131,6 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    // ---------------------------------------------------------------
-    // 5) POST /api/v1/orders/{id}/approve — Approve order
-    // ---------------------------------------------------------------
     @PostMapping("/{id}/approve")
     @Operation(
             summary = "Approve order",
@@ -183,9 +168,6 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    // ---------------------------------------------------------------
-    // 6) POST /api/v1/orders/{id}/cancel — Cancel order
-    // ---------------------------------------------------------------
     @PostMapping("/{id}/cancel")
     @Operation(
             summary = "Cancel order",
@@ -212,9 +194,6 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    // ---------------------------------------------------------------
-    // 7) PATCH /api/v1/orders/{id}/status — Update status manually
-    // ---------------------------------------------------------------
     @PatchMapping("/{id}/status")
     @Operation(
             summary = "Update order status",

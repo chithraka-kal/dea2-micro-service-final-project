@@ -87,9 +87,6 @@ class OrderControllerTest {
                 .build();
     }
 
-    // ==================================================================
-    //  POST /api/v1/orders — Create Order
-    // ==================================================================
     @Nested
     @DisplayName("POST /api/v1/orders")
     class CreateOrderEndpoint {
@@ -184,9 +181,6 @@ class OrderControllerTest {
         }
     }
 
-    // ==================================================================
-    //  GET /api/v1/orders/{id}
-    // ==================================================================
     @Nested
     @DisplayName("GET /api/v1/orders/{id}")
     class GetOrderEndpoint {
@@ -215,9 +209,6 @@ class OrderControllerTest {
         }
     }
 
-    // ==================================================================
-    //  GET /api/v1/orders
-    // ==================================================================
     @Nested
     @DisplayName("GET /api/v1/orders")
     class ListOrdersEndpoint {
@@ -243,9 +234,6 @@ class OrderControllerTest {
         }
     }
 
-    // ==================================================================
-    //  POST /api/v1/orders/{id}/validate
-    // ==================================================================
     @Nested
     @DisplayName("POST /api/v1/orders/{id}/validate")
     class ValidateOrderEndpoint {
@@ -278,9 +266,6 @@ class OrderControllerTest {
         }
     }
 
-    // ==================================================================
-    //  POST /api/v1/orders/{id}/approve
-    // ==================================================================
     @Nested
     @DisplayName("POST /api/v1/orders/{id}/approve")
     class ApproveOrderEndpoint {
@@ -316,9 +301,6 @@ class OrderControllerTest {
         }
     }
 
-    // ==================================================================
-    //  POST /api/v1/orders/{id}/cancel
-    // ==================================================================
     @Nested
     @DisplayName("POST /api/v1/orders/{id}/cancel")
     class CancelOrderEndpoint {
@@ -349,9 +331,6 @@ class OrderControllerTest {
         }
     }
 
-    // ==================================================================
-    //  PATCH /api/v1/orders/{id}/status
-    // ==================================================================
     @Nested
     @DisplayName("PATCH /api/v1/orders/{id}/status")
     class UpdateStatusEndpoint {

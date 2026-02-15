@@ -99,9 +99,6 @@ class OrderServiceImplTest {
         item2.setOrder(sampleOrder);
     }
 
-    // ==================================================================
-    //  CREATE ORDER
-    // ==================================================================
     @Nested
     @DisplayName("Create Order")
     class CreateOrderTests {
@@ -142,9 +139,6 @@ class OrderServiceImplTest {
         }
     }
 
-    // ==================================================================
-    //  GET ORDER
-    // ==================================================================
     @Nested
     @DisplayName("Get Order")
     class GetOrderTests {
@@ -171,9 +165,6 @@ class OrderServiceImplTest {
         }
     }
 
-    // ==================================================================
-    //  GET ALL ORDERS
-    // ==================================================================
     @Nested
     @DisplayName("Get All Orders")
     class GetAllOrdersTests {
@@ -203,9 +194,6 @@ class OrderServiceImplTest {
         }
     }
 
-    // ==================================================================
-    //  VALIDATE ORDER
-    // ==================================================================
     @Nested
     @DisplayName("Validate Order")
     class ValidateOrderTests {
@@ -275,9 +263,6 @@ class OrderServiceImplTest {
         }
     }
 
-    // ==================================================================
-    //  APPROVE ORDER
-    // ==================================================================
     @Nested
     @DisplayName("Approve Order")
     class ApproveOrderTests {
@@ -467,9 +452,6 @@ class OrderServiceImplTest {
         }
     }
 
-    // ==================================================================
-    //  CANCEL ORDER
-    // ==================================================================
     @Nested
     @DisplayName("Cancel Order")
     class CancelOrderTests {
@@ -504,9 +486,6 @@ class OrderServiceImplTest {
         }
     }
 
-    // ==================================================================
-    //  UPDATE STATUS
-    // ==================================================================
     @Nested
     @DisplayName("Update Order Status")
     class UpdateStatusTests {
