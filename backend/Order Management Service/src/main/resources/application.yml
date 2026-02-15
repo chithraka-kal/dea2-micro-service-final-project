@@ -32,6 +32,6 @@ springdoc:
     path: /v3/api-docs
 
 logging:
-  level:
-    com.wms.orderservice: DEBUG
-    org.springframework.web: INFO
+  config: classpath:logback-spring.xml
+  file:
+    path: logs
