@@ -1,7 +1,6 @@
 package com.wms.workforce_equipment_service.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,16 +8,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EquipmentRequest {
+public class EquipmentTypeRequest {
 
     @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank(message = "Status is required")
-    private String status;
-
     private String description;
 
-    @NotNull(message = "Equipment Type ID is required")
-    private Long equipmentTypeId;
+    @NotBlank(message = "Manufacturer is required")
+    private String manufacturer;
+
+    @NotBlank(message = "Model is required")
+    private String model;
 }

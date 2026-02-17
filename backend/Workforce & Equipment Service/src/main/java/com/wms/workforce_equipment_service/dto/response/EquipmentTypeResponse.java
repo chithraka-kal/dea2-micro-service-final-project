@@ -7,12 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EquipmentResponse {
+public class EquipmentTypeResponse {
 
     private Long id;
     private String name;
-    private String status;
     private String description;
-    private Long equipmentTypeId;
-    private String equipmentTypeName;
+    private String manufacturer;
+    private String model;
 }

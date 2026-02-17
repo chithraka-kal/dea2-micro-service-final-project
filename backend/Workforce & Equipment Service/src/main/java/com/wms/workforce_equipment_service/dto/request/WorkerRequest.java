@@ -1,5 +1,7 @@
 package com.wms.workforce_equipment_service.dto.request;
 
+import com.wms.workforce_equipment_service.model.enums.Shift;
+import com.wms.workforce_equipment_service.model.enums.WorkerRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -9,16 +11,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EquipmentRequest {
+public class WorkerRequest {
 
     @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank(message = "Status is required")
-    private String status;
+    @NotNull(message = "Shift is required")
+    private Shift shift;
 
-    private String description;
-
-    @NotNull(message = "Equipment Type ID is required")
-    private Long equipmentTypeId;
+    @NotNull(message = "Role is required")
+    private WorkerRole role;
 }

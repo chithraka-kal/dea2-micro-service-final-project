@@ -1,5 +1,7 @@
 package com.wms.workforce_equipment_service.dto.response;
 
+import com.wms.workforce_equipment_service.model.enums.Shift;
+import com.wms.workforce_equipment_service.model.enums.WorkerRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,12 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EquipmentResponse {
+public class WorkerResponse {
 
     private Long id;
     private String name;
-    private String status;
-    private String description;
-    private Long equipmentTypeId;
-    private String equipmentTypeName;
+    private Shift shift;
+    private WorkerRole role;
 }

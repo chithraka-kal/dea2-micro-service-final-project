@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "equipment")
 @Data
@@ -16,12 +18,22 @@ public class Equipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
-
-    @Column(nullable = false)
-    private String type;
-
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String status;
+
+    @Column(length = 500)
+    private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "equipment_type_id", nullable = false)
+    private EquipmentType equipmentType;
+
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MaintenanceLog> maintenanceLogs;
+
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EquipmentAssignment> assignments;
 }
