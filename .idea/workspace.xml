@@ -10,9 +10,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="39gwVBo8jlNzvl5peula1a9BHBp" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -23,9 +23,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "inbound-receiving-service",
-    "last_opened_file_path": "D:/4th year 1st sem/DEA 2/projects/dea2-micro-service-final-project",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/4th year 1st sem/DEA 2/projects/dea2-micro-service-final-project/backend/Inbound Receiving Service",
     "nodejs_package_manager_path": "npm",
+    "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -46,7 +48,11 @@
       <option name="presentableId" value="Default" />
       <updated>1771131042857</updated>
       <workItem from="1771131044062" duration="38000" />
+      <workItem from="1771304922169" duration="59000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
