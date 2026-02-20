@@ -17,13 +17,13 @@ public class OrderMapper {
 
     public Order toEntity(CreateOrderRequest request) {
         Order order = Order.builder()
-                .customerId(request.getCustomerId())
-                .partialAllowed(request.getPartialAllowed())
+                .customerId(request.customerId())
+                .partialAllowed(request.partialAllowed())
                 .status(OrderStatus.CREATED)
                 .build();
 
-        if (request.getItems() != null) {
-            List<OrderItem> items = request.getItems().stream()
+        if (request.items() != null) {
+            List<OrderItem> items = request.items().stream()
                     .map(this::toOrderItemEntity)
                     .collect(Collectors.toList());
             items.forEach(order::addItem);
@@ -34,10 +34,10 @@ public class OrderMapper {
 
     public OrderItem toOrderItemEntity(CreateOrderItemRequest request) {
         return OrderItem.builder()
-                .itemId(request.getItemId())
-                .requestedQty(request.getQuantity())
+                .itemId(request.itemId())
+                .requestedQty(request.quantity())
                 .approvedQty(0)
-                .unitPrice(request.getUnitPrice())
+                .unitPrice(request.unitPrice())
                 .build();
     }
 
