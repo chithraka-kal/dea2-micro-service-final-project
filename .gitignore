@@ -1,1 +1,11 @@
 .idea/workspace.xml
+
+# Compiled class file
+*.class
+*.lst
+
+# Log file
+*.log
+
+# Maven
+target/
