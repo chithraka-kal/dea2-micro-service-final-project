@@ -3,7 +3,7 @@ name: Deploy Backend to Azure VM
 on:
   push:
     branches:
-      - deployment
+      - deploy-chithraka
     paths:
       - "backend/Storage Location Service/**"
 
